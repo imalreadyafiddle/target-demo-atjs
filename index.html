@@ -19,8 +19,8 @@
       // Various extra params for when logged in
       if (urlParams.has("demo")) {
         switch (urlParams.get("demo")) {
-          case "logged-in":
-            digitalData.push({
+          case "logged-in-cold":
+            digitalData.targetParams = {
               user: {
                 id: "123456",
                 firstName: "Chris",
@@ -29,7 +29,27 @@
                 gender: "male",
                 favoriteColor: "green",
               },
-            });
+              weather: {
+                temperature: "cold",
+                condition: "windy",
+              },
+            };
+            break;
+          case "logged-in-hot":
+            digitalData.targetParams = {
+              user: {
+                id: "123456",
+                firstName: "Chris",
+              },
+              profile: {
+                gender: "male",
+                favoriteColor: "blue",
+              },
+              weather: {
+                temperature: "hot",
+                condition: "sunny",
+              },
+            };
             break;
         }
       }
@@ -43,8 +63,9 @@
           // simulating network request
           setTimeout(function () {
             callback(null, {
-              "weather.temperature": "cold",
-              "weather.condition": "windy",
+              "weather.temperature":
+                digitalData.weather.temperature || "normal",
+              "weather.condition": digitalData.weather.condition || "pleasant",
             });
           }, 500);
         },
