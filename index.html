@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Target Demo – at.js 2.x</title>
+    <title>PDP: Your New Favorite Hat</title>
 
     <script>
       // Let's fake a data layer and use a query param to simulate being logged in!
       const urlParams = new URLSearchParams(window.location.search);
-      let digitalData = {
+      window.digitalData = {
         entity: {
           id: "12345",
           name: "Your New Favorite Hat",
           category: "cdDemo",
         },
         page: {
-          name: "Target Demo Page",
+          name: "PDP: Your New Favorite Hat",
         },
         targetParams: {
           weather: {
@@ -29,7 +29,7 @@
       if (urlParams.has("demo")) {
         switch (urlParams.get("demo")) {
           case "logged-in-cold":
-            digitalData.targetParams = {
+            window.digitalData.targetParams = {
               user: {
                 id: "123456",
                 firstName: "Chris",
@@ -46,7 +46,7 @@
             };
             break;
           case "logged-in-hot":
-            digitalData.targetParams = {
+            window.digitalData.targetParams = {
               user: {
                 id: "123456",
                 firstName: "Chris",
@@ -73,10 +73,11 @@
           setTimeout(function () {
             callback(null, {
               "weather.temperature":
-                digitalData.targetParams.weather.temperature,
-              "weather.condition": digitalData.targetParams.weather.condition,
+                window.digitalData.targetParams.weather.temperature,
+              "weather.condition":
+                window.digitalData.targetParams.weather.condition,
             });
-          }, 1000);
+          }, 500);
         },
       };
 
@@ -87,45 +88,45 @@
         secureOnly: true,
       };
 
-        // Target Prehiding
-        (function (win, doc, style, timeout) {
-          var STYLE_ID = "at-body-style";
+      //   // Target Prehiding
+      //   (function (win, doc, style, timeout) {
+      //     var STYLE_ID = "at-body-style";
 
-          function getParent() {
-            return doc.getElementsByTagName("head")[0];
-          }
+      //     function getParent() {
+      //       return doc.getElementsByTagName("head")[0];
+      //     }
 
-          function addStyle(parent, id, def) {
-            if (!parent) {
-              return;
-            }
+      //     function addStyle(parent, id, def) {
+      //       if (!parent) {
+      //         return;
+      //       }
 
-            var style = doc.createElement("style");
-            style.id = id;
-            style.innerHTML = def;
-            parent.appendChild(style);
-          }
+      //       var style = doc.createElement("style");
+      //       style.id = id;
+      //       style.innerHTML = def;
+      //       parent.appendChild(style);
+      //     }
 
-          function removeStyle(parent, id) {
-            if (!parent) {
-              return;
-            }
+      //     function removeStyle(parent, id) {
+      //       if (!parent) {
+      //         return;
+      //       }
 
-            var style = doc.getElementById(id);
+      //       var style = doc.getElementById(id);
 
-            if (!style) {
-              return;
-            }
+      //       if (!style) {
+      //         return;
+      //       }
 
-            parent.removeChild(style);
-          }
+      //       parent.removeChild(style);
+      //     }
 
-          addStyle(getParent(), STYLE_ID, style);
-          setTimeout(function () {
-            removeStyle(getParent(), STYLE_ID);
-          }, timeout);
-        })(window, document, "body {opacity: 0 !important}", 750);
-      
+      //     addStyle(getParent(), STYLE_ID, style);
+      //     setTimeout(function () {
+      //       removeStyle(getParent(), STYLE_ID);
+      //     }, timeout);
+      //   })(window, document, "body {opacity: 0 !important}", 750);
+      //
     </script>
 
     <!-- Data Layer Check-->
@@ -134,7 +135,10 @@
     </script>
 
     <!--Adobe Data Collection Container-->
-<script src="https://assets.adobedtm.com/409c9b2973cc/35b29fd8c6f5/launch-d33653e19672.min.js" async></script>
+    <script
+      src="https://assets.adobedtm.com/409c9b2973cc/35b29fd8c6f5/launch-d33653e19672.min.js"
+      async
+    ></script>
 
     <style>
       .button {
