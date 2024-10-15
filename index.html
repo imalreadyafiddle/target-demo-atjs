@@ -6,7 +6,7 @@
     <script>
       // Let's fake a data layer abd use a query param to simulate being logged in!
       const urlParams = new URLSearchParams(window.location.search);
-      var digitalData = {
+      let digitalData = {
         entity: {
           id: "12345",
           name: "Your New Favorite Hat",
@@ -77,44 +77,45 @@
         secureOnly: true,
       };
 
-      // Target Prehiding
-      (function (win, doc, style, timeout) {
-        var STYLE_ID = "at-body-style";
+      //   // Target Prehiding
+      //   (function (win, doc, style, timeout) {
+      //     var STYLE_ID = "at-body-style";
 
-        function getParent() {
-          return doc.getElementsByTagName("head")[0];
-        }
+      //     function getParent() {
+      //       return doc.getElementsByTagName("head")[0];
+      //     }
 
-        function addStyle(parent, id, def) {
-          if (!parent) {
-            return;
-          }
+      //     function addStyle(parent, id, def) {
+      //       if (!parent) {
+      //         return;
+      //       }
 
-          var style = doc.createElement("style");
-          style.id = id;
-          style.innerHTML = def;
-          parent.appendChild(style);
-        }
+      //       var style = doc.createElement("style");
+      //       style.id = id;
+      //       style.innerHTML = def;
+      //       parent.appendChild(style);
+      //     }
 
-        function removeStyle(parent, id) {
-          if (!parent) {
-            return;
-          }
+      //     function removeStyle(parent, id) {
+      //       if (!parent) {
+      //         return;
+      //       }
 
-          var style = doc.getElementById(id);
+      //       var style = doc.getElementById(id);
 
-          if (!style) {
-            return;
-          }
+      //       if (!style) {
+      //         return;
+      //       }
 
-          parent.removeChild(style);
-        }
+      //       parent.removeChild(style);
+      //     }
 
-        addStyle(getParent(), STYLE_ID, style);
-        setTimeout(function () {
-          removeStyle(getParent(), STYLE_ID);
-        }, timeout);
-      })(window, document, "body {opacity: 0 !important}", 750);
+      //     addStyle(getParent(), STYLE_ID, style);
+      //     setTimeout(function () {
+      //       removeStyle(getParent(), STYLE_ID);
+      //     }, timeout);
+      //   })(window, document, "body {opacity: 0 !important}", 750);
+      //
     </script>
 
     <!--Adobe Data Collection Container-->
@@ -145,9 +146,11 @@
       }
       .grid {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
         grid-gap: 10px;
         padding: 10px;
+      }
+      .three-col {
+        grid-template-columns: repeat(3, 1fr);
       }
       h1,
       .rank-order-holder,
@@ -181,77 +184,28 @@
     </style>
   </head>
   <body>
-    <h1>PLEASE LOVE THE COLORS</h1>
-    <div class="grid">
+    <h1>WHAT DO YOU WANT?!</h1>
+    <div class="grid three-col">
       <button
         class="button"
         data-button-id="0"
-        onclick="handleButtonClick('apples')"
+        onclick="handleCategoryClick('tops')"
       >
-        &#127822;
+        JACKETS
       </button>
       <button
         class="button"
         data-button-id="1"
-        onclick="handleButtonClick('bananas')"
+        onclick="handleCategoryClick('bottoms')"
       >
-        &#127820;
+        PANTS
       </button>
       <button
         class="button"
         data-button-id="2"
-        onclick="handleButtonClick('carrots')"
+        onclick="handleCategoryClick('accessories')"
       >
-        &#129365;
-      </button>
-      <button
-        class="button"
-        data-button-id="3"
-        onclick="handleButtonClick('donuts')"
-      >
-        &#127849;
-      </button>
-      <button
-        class="button"
-        data-button-id="4"
-        onclick="handleButtonClick('eggs')"
-      >
-        &#129370;
-      </button>
-      <button
-        class="button"
-        data-button-id="5"
-        onclick="handleButtonClick('fries')"
-      >
-        &#127839;
-      </button>
-      <button
-        class="button"
-        data-button-id="6"
-        onclick="handleButtonClick('grapes')"
-      >
-        &#127815;
-      </button>
-      <button
-        class="button"
-        data-button-id="7"
-        onclick="handleButtonClick('hot dogs')"
-      >
-        &#127789;
-      </button>
-      <button
-        class="button"
-        data-button-id="8"
-        onclick="handleButtonClick('ice cream')"
-      >
-        &#127846;
-      </button>
-      <button
-        class="button"
-        data-button-id="9"
-        onclick="handleButtonClick('juice')"
-      >
-        &#129475;
+        ACCESSORIES
       </button>
     </div>
     <div class="rank-order-holder"></div>
@@ -295,13 +249,13 @@
     </p>
 
     <script>
-      function handleButtonClick(color) {
+      function handleCategoryClick(category) {
         // Handle button click event here
         console.log(food + " button was clicked.");
         adobe.target.getOffer({
           mbox: "category-affinity-mbox",
           params: {
-            "user.categoryId": color,
+            "user.categoryId": category,
           },
           success: function (offer) {
             adobe.target.applyOffer({
