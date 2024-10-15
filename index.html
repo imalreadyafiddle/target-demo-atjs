@@ -497,6 +497,16 @@
         console.log("The toggle is set to color:", color);
         // Add your custom logic here
       }
+
+      function changeWeatherSpans(weather) {
+        const weatherCondition = document.getElementById("weatherCondition");
+        const weatherTemperature =
+          document.getElementById("weatherTemperature");
+
+        weatherCondition.innerText = weather.condition;
+        weatherTemperature.innerText = weather.temperature;
+      }
+      changeWeatherSpans(digitalData.targetParams.weather);
     </script>
   </body>
 </html>
