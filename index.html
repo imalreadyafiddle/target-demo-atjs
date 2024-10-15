@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Category Affinity Demo – at.js 2.x</title>
+    <script>
+      window.targetGlobalSettings = {
+        cookieDomain: "imalreadyafiddle.github.io",
+        secureOnly: true,
+      };
+      (function (win, doc, style, timeout) {
+        var STYLE_ID = "at-body-style";
+
+        function getParent() {
+          return doc.getElementsByTagName("head")[0];
+        }
+
+        function addStyle(parent, id, def) {
+          if (!parent) {
+            return;
+          }
+
+          var style = doc.createElement("style");
+          style.id = id;
+          style.innerHTML = def;
+          parent.appendChild(style);
+        }
+
+        function removeStyle(parent, id) {
+          if (!parent) {
+            return;
+          }
+
+          var style = doc.getElementById(id);
+
+          if (!style) {
+            return;
+          }
+
+          parent.removeChild(style);
+        }
+
+        addStyle(getParent(), STYLE_ID, style);
+        setTimeout(function () {
+          removeStyle(getParent(), STYLE_ID);
+        }, timeout);
+      })(window, document, "body {opacity: 0 !important}", 750);
+    </script>
+    <script
+      src="https://assets.adobedtm.com/409c9b2973cc/96bbc6f5da33/launch-85c17829cd30.min.js"
+      async
+    ></script>
+    <style>
+      .button {
+        height: 3rem;
+        margin: 5px;
+        background-color: #ccc;
+        border: none;
+        cursor: pointer;
+        border-radius: 15px;
+        font-size: 2rem;
+      }
+      .button:hover {
+        background-color: #bbb;
+      }
+      .button:active {
+        background-color: #444;
+      }
+      body {
+        background-color: #000;
+        color: #fff;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: 10px;
+        padding: 10px;
+      }
+      h1,
+      .rank-order-holder,
+      .catfinity-info,
+      p {
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .catfinity-info,
+      .rank-order {
+        list-style-position: inside;
+      }
+      .rank-order-list {
+        display: inline-block;
+        text-align: left;
+        margin-bottom: 5px;
+      }
+      .rank-order-holder {
+        text-align: center;
+      }
+      li:first-of-type {
+        margin-top: 15px;
+      }
+      li {
+        margin-bottom: 5px;
+        text-align: left;
+      }
+      ol {
+        padding-right: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>PLEASE LOVE THE PRODUCTS</h1>
+    <div class="grid">
+      <button
+        class="button"
+        data-button-id="0"
+        onclick="handleButtonClick('apples')"
+      >
+        &#127822;
+      </button>
+      <button
+        class="button"
+        data-button-id="1"
+        onclick="handleButtonClick('bananas')"
+      >
+        &#127820;
+      </button>
+      <button
+        class="button"
+        data-button-id="2"
+        onclick="handleButtonClick('carrots')"
+      >
+        &#129365;
+      </button>
+      <button
+        class="button"
+        data-button-id="3"
+        onclick="handleButtonClick('donuts')"
+      >
+        &#127849;
+      </button>
+      <button
+        class="button"
+        data-button-id="4"
+        onclick="handleButtonClick('eggs')"
+      >
+        &#129370;
+      </button>
+      <button
+        class="button"
+        data-button-id="5"
+        onclick="handleButtonClick('fries')"
+      >
+        &#127839;
+      </button>
+      <button
+        class="button"
+        data-button-id="6"
+        onclick="handleButtonClick('grapes')"
+      >
+        &#127815;
+      </button>
+      <button
+        class="button"
+        data-button-id="7"
+        onclick="handleButtonClick('hot dogs')"
+      >
+        &#127789;
+      </button>
+      <button
+        class="button"
+        data-button-id="8"
+        onclick="handleButtonClick('ice cream')"
+      >
+        &#127846;
+      </button>
+      <button
+        class="button"
+        data-button-id="9"
+        onclick="handleButtonClick('juice')"
+      >
+        &#129475;
+      </button>
+    </div>
+    <div class="rank-order-holder"></div>
+    <hr />
+    <ol class="catfinity-info">
+      How to see what's going on behind the scenes:
+      <li>
+        Open Developer Console (F12 or right-click on the page -> select
+        "Inspect")
+      </li>
+      <li>Select "Network" Tab</li>
+      <li>
+        Check "Preserve Log" box - this will keep the log from clearing between
+        page loads
+      </li>
+      <li>
+        Refresh this page
+      </li>
+      <li>
+        Filter network requests by "delivery" - Target calls will be made
+        through at.js to the Delivery API endpoint at page load and as buttons
+        are clicked
+      </li>
+      <li>
+        Click on a Target call, it will have its own tabs to sort through;
+        "Payload" shows the request made to Target, "Preview" shows the response
+        from Target — these items can be expanded using the triangle drop-downs
+        in the request/response bodies
+      </li>
+      <li>
+        Category info is sent to Target in requests made when a button is
+        clicked, a dynamic offer containing rank order affinities associated
+        with the pseudononymous Target Visitor Profile is returned by Target in
+        the response
+      </li>
+    </ol>
+
+    <p>Check out the Web SDK (alloy.js) version <a href="https://imalreadyafiddle.github.io/category-affinity-alloy/">here</a></p>
+
+    <script>
+      function handleButtonClick(food) {
+        // Handle button click event here
+        console.log(food + " button was clicked.");
+        adobe.target.getOffer({
+          mbox: "target-global-mbox",
+          params: {
+            "user.categoryId": food,
+          },
+          success: function (offer) {
+            adobe.target.applyOffer({
+              mbox: "target-global-mbox",
+              offer: offer,
+            });
+          },
+          error: function (status, error) {
+            console.log("Error", status, error);
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
