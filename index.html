@@ -64,8 +64,9 @@
           setTimeout(function () {
             callback(null, {
               "weather.temperature":
-                digitalData.weather.temperature || "normal",
-              "weather.condition": digitalData.weather.condition || "pleasant",
+                digitalData.targetParams.temperature || "normal",
+              "weather.condition":
+                digitalData.targetParams.weather.condition || "pleasant",
             });
           }, 500);
         },
