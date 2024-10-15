@@ -1,12 +1,63 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Category Affinity Demo – at.js 2.x</title>
+    <title>Target Demo – at.js 2.x</title>
+
     <script>
+      // Let's fake a data layer abd use a query param to simulate being logged in!
+      const urlParams = new URLSearchParams(window.location.search);
+      let digitalData = {
+        entity: {
+          id: "12345",
+          name: "Your New Favorite Hat",
+          category: "cdDemo",
+        },
+        page: {
+          name: "Target Demo Page",
+        },
+      };
+      // Various extra params for when logged in
+      if (urlParams.has("demo")) {
+        switch (urlParams.get("demo")) {
+          case "logged-in":
+            digitalData.push({
+              user: {
+                id: "123456",
+                firstName: "Chris",
+              },
+              profile: {
+                gender: "male",
+                favoriteColor: "green",
+              },
+            });
+            break;
+        }
+      }
+    </script>
+    <script>
+      //simulated data provider
+      var weatherDataProvider = {
+        name: "weatherData",
+        version: "1.0.0",
+        provider: function (callback) {
+          // simulating network request
+          setTimeout(function () {
+            callback(null, {
+              "weather.temperature": "cold",
+              "weather.condition": "windy",
+            });
+          }, 500);
+        },
+      };
+
+      // Target Global Settings - With a Data Provider!
       window.targetGlobalSettings = {
         cookieDomain: "imalreadyafiddle.github.io",
+        dataProviders: [weatherDataProvider],
         secureOnly: true,
       };
+
+      // Target Prehiding
       (function (win, doc, style, timeout) {
         var STYLE_ID = "at-body-style";
 
@@ -45,10 +96,13 @@
         }, timeout);
       })(window, document, "body {opacity: 0 !important}", 750);
     </script>
+
+    <!--Adobe Data Collection Container-->
     <script
-      src="https://assets.adobedtm.com/409c9b2973cc/96bbc6f5da33/launch-85c17829cd30.min.js"
+      src="https://assets.adobedtm.com/409c9b2973cc/35b29fd8c6f5/launch-d33653e19672.min.js"
       async
     ></script>
+
     <style>
       .button {
         height: 3rem;
@@ -107,7 +161,7 @@
     </style>
   </head>
   <body>
-    <h1>PLEASE LOVE THE PRODUCTS</h1>
+    <h1>PLEASE LOVE THE COLORS</h1>
     <div class="grid">
       <button
         class="button"
@@ -193,9 +247,7 @@
         Check "Preserve Log" box - this will keep the log from clearing between
         page loads
       </li>
-      <li>
-        Refresh this page
-      </li>
+      <li>Refresh this page</li>
       <li>
         Filter network requests by "delivery" - Target calls will be made
         through at.js to the Delivery API endpoint at page load and as buttons
@@ -215,20 +267,25 @@
       </li>
     </ol>
 
-    <p>Check out the Web SDK (alloy.js) version <a href="https://imalreadyafiddle.github.io/category-affinity-alloy/">here</a></p>
+    <p>
+      Check out the Web SDK (alloy.js) version
+      <a href="https://imalreadyafiddle.github.io/category-affinity-alloy/"
+        >here</a
+      >
+    </p>
 
     <script>
-      function handleButtonClick(food) {
+      function handleButtonClick(color) {
         // Handle button click event here
         console.log(food + " button was clicked.");
         adobe.target.getOffer({
-          mbox: "target-global-mbox",
+          mbox: "category-affinity-mbox",
           params: {
-            "user.categoryId": food,
+            "user.categoryId": color,
           },
           success: function (offer) {
             adobe.target.applyOffer({
-              mbox: "target-global-mbox",
+              mbox: "category-affinity-mbox",
               offer: offer,
             });
           },
