@@ -20,6 +20,9 @@
             temperature: "normal",
             condition: "pleasant",
           },
+          user: {
+            loggedIn: "false",
+          },
         },
       };
       // Various extra params for when logged in
@@ -30,6 +33,7 @@
               user: {
                 id: "123456",
                 firstName: "Chris",
+                loggedIn: "true",
               },
               profile: {
                 gender: "male",
@@ -46,6 +50,7 @@
               user: {
                 id: "123456",
                 firstName: "Chris",
+                loggedIn: "true",
               },
               profile: {
                 gender: "male",
@@ -348,7 +353,7 @@
     </p>
 
     <!-- For Sending Category Affinity Information-->
-    <h1>WHAT DO YOU WANT TO GO WITH THIS HAT?!</h1>
+    <h1>GOES GREAT WITH:</h1>
     <p>
       Click on a category to see more of what you want! We'll remember your
       preferences.
