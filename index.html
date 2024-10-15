@@ -64,26 +64,26 @@
             break;
         }
       }
-      //simulated data provider
-      var weatherDataProvider = {
-        name: "weatherData",
-        version: "1.0.0",
-        provider: function (callback) {
-          // simulating network request
-          setTimeout(function () {
-            callback(null, {
-              "weather.temperature":
-                digitalData.targetParams.weather.temperature,
-              "weather.condition": digitalData.targetParams.weather.condition,
-            });
-          }, 1000);
-        },
-      };
+      // //simulated data provider
+      // var weatherDataProvider = {
+      //   name: "weatherData",
+      //   version: "1.0.0",
+      //   provider: function (callback) {
+      //     // simulating network request
+      //     setTimeout(function () {
+      //       callback(null, {
+      //         "weather.temperature":
+      //           digitalData.targetParams.weather.temperature,
+      //         "weather.condition": digitalData.targetParams.weather.condition,
+      //       });
+      //     }, 1000);
+      //   },
+      // };
 
       // Target Global Settings - With a Data Provider!
       window.targetGlobalSettings = {
         cookieDomain: "imalreadyafiddle.github.io",
-        dataProviders: [weatherDataProvider],
+        // dataProviders: [weatherDataProvider],
         secureOnly: true,
       };
 
@@ -134,7 +134,7 @@
     </script>
 
     <!--Adobe Data Collection Container-->
-<script src="https://assets.adobedtm.com/409c9b2973cc/35b29fd8c6f5/launch-d33653e19672.min.js"></script>
+<script src="https://assets.adobedtm.com/409c9b2973cc/35b29fd8c6f5/launch-d33653e19672.min.js" async></script>
 
     <style>
       .button {
@@ -515,6 +515,5 @@
       }
       changeWeatherSpans(digitalData.targetParams.weather);
     </script>
-    <script type="text/javascript">_satellite.pageBottom();</script>
   </body>
 </html>
