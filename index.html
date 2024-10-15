@@ -15,6 +15,10 @@
         page: {
           name: "Target Demo Page",
         },
+        weather: {
+          temperature: "normal",
+          condition: "pleasant",
+        },
       };
       // Various extra params for when logged in
       if (urlParams.has("demo")) {
@@ -62,11 +66,10 @@
           setTimeout(function () {
             callback(null, {
               "weather.temperature":
-                digitalData.targetParams.weather.temperature || "normal",
-              "weather.condition":
-                digitalData.targetParams.weather.condition || "pleasant",
+                digitalData.targetParams.weather.temperature,
+              "weather.condition": digitalData.targetParams.weather.condition,
             });
-          }, 50);
+          }, 500);
         },
       };
 
