@@ -65,9 +65,8 @@
           // simulating network request
           setTimeout(function () {
             callback(null, {
-              "weather.temperature":
-                digitalData.targetParams.weather.temperature,
-              "weather.condition": digitalData.targetParams.weather.condition,
+              "weather.temperature": digitalData.weather.temperature,
+              "weather.condition": digitalData.weather.condition,
             });
           }, 500);
         },
